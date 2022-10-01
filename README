@@ -1,0 +1,2 @@
+## VM options
+Dlog4j.configuration=file:log4j.properties Dlogfile.name=hello spark Dspark.yarn.app.container.log.dir =app logs
