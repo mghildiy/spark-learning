@@ -1,7 +1,11 @@
 package com.manish.spark.learning.utils
 
+import org.apache.spark.SparkConf
 import org.apache.spark.sql.types.StructType
 import org.apache.spark.sql.{DataFrameReader, SparkSession}
+
+import java.util.Properties
+import scala.io.Source
 
 // DataFrameReader = SparkSession.read
 // DataFrame = DataFrameReader
@@ -19,13 +23,32 @@ import org.apache.spark.sql.{DataFrameReader, SparkSession}
 
 object Utils {
 
-  def createSparkSession(appName: String): SparkSession =
+  def createSparkSession(appName: String): SparkSession = {
+    val sparkConf = new SparkConf()
+    sparkConf.set("spark.app.name", appName)
+    sparkConf.set("spark.master", "local[3]")
     SparkSession
       .builder()
-      .appName(appName)
-      .master("local[3]")
-      //.config("spark.master", "local")
+      .config(sparkConf)
       .getOrCreate()
+  }
+
+  private def getSparkConf(confFilePath: String) = {
+    val sparkConf = new SparkConf()
+    val properties = new Properties
+    properties.load(Source.fromFile(confFilePath).bufferedReader())
+    properties.forEach((k,v) => sparkConf.set(k.toString, v.toString))
+
+    sparkConf
+  }
+
+  def createSparkSessionFromConf(confFilePath: String): SparkSession = {
+    SparkSession
+      .builder()
+      .config(getSparkConf(confFilePath))
+      .getOrCreate()
+  }
+
 
   def dataFrameFromSchemaAndFile(spark: SparkSession,schema: StructType, fileName: String, fileFormat: String) = {
     val dataFrameReader = spark.read.schema(schema)

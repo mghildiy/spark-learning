@@ -1,2 +1,6 @@
 ## VM options
-Dlog4j.configuration=file:log4j.properties Dlogfile.name=hello spark Dspark.yarn.app.container.log.dir =app logs
+Intellij IDE VM options for a spark application logs:
+
+* -Dlog4j.configuration=file:src/main/resources/log4j.properties
+* -Dspark.yarn.app.container.log.dir=\<log directory\>
+* -Dlogfile.name=\<log file name\>
