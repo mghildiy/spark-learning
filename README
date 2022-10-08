@@ -4,3 +4,7 @@ Intellij IDE VM options for a spark application logs:
 * -Dlog4j.configuration=file:src/main/resources/log4j.properties
 * -Dspark.yarn.app.container.log.dir=\<log directory\>
 * -Dlogfile.name=\<log file name\>
+
+## Program arguments
+data:src/main/resources/data/source/flight-time.parquet
+conf:src/main/resources/conf/writing-spark.conf

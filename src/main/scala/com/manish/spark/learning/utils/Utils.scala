@@ -7,19 +7,9 @@ import org.apache.spark.sql.{DataFrameReader, SparkSession}
 import java.util.Properties
 import scala.io.Source
 
-// DataFrameReader = SparkSession.read
-// DataFrame = DataFrameReader
-// .format(arg)....csv,json, parquet(default), avro etc etc
-// .option("key", "value")
-// .schema(args)...DDL String or StructType
-// .load(arg)...path to data source
-
-// DataframeWriter = DataFrame.write
-// DataframeWriter
-// .format(arg)....csv,json, parquet(default), avro etc etc
-// .option("key", "value")
-// .save(arg)
-// .saveAsTable(arg)
+sealed trait FileFormat
+object CSV extends FileFormat
+object JSON extends FileFormat
 
 object Utils {
 
@@ -50,18 +40,19 @@ object Utils {
   }
 
 
-  def dataFrameFromSchemaAndFile(spark: SparkSession,schema: StructType, fileName: String, fileFormat: String) = {
+  def dataFrameFromSchemaAndFile(spark: SparkSession,schema: StructType, filePath: String, fileFormat: FileFormat) = {
     val dataFrameReader = spark.read.schema(schema)
-    createDataFrameFromFile(dataFrameReader, fileName, fileFormat)
+    createDataFrameFromFile(dataFrameReader, filePath, fileFormat)
   }
 
-  def dataFrameFromSampleAndFile(spark: SparkSession, samplingRatio: Double, header: Boolean, fileName: String, fileFormat: String) = {
+  def dataFrameFromSampleAndFile(spark: SparkSession, samplingRatio: Double, header: Boolean = true, inferSchema: Boolean = true, filePath: String, fileFormat: FileFormat) = {
     val dataFrameReader = spark
       .read
       .option("samplingRatio", samplingRatio)
       .option("header", header)
+      .option("inferSchema", inferSchema)
 
-    createDataFrameFromFile(dataFrameReader, fileName, fileFormat)
+    createDataFrameFromFile(dataFrameReader, filePath, fileFormat)
   }
 
   /*def dataSetFromFileAndCaseClass[T](spark: SparkSession, fileName: String, encoder: Encoder[T], fileFormat: String) =
@@ -72,10 +63,10 @@ object Utils {
   def getFilePath(fileName: String): String =
     getClass.getClassLoader.getResource(fileName).getFile
 
-  private def createDataFrameFromFile(dataFrameReader: DataFrameReader, fileName: String, fileFormat: String) =
+  private def createDataFrameFromFile(dataFrameReader: DataFrameReader, filePath: String, fileFormat: FileFormat) =
     fileFormat match {
-      case "csv" => dataFrameReader.csv(fileName/*getFilePath(fileName)*/)
-      case "json" => dataFrameReader.json(fileName/*getFilePath(fileName)*/)
+      case CSV => dataFrameReader.csv(filePath)
+      case JSON => dataFrameReader.json(filePath)
       case _ => throw new Exception("File format not supported")
     }
 

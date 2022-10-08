@@ -1,6 +1,6 @@
 package com.manish.spark.learning.buildingblocks.sql
 
-import com.manish.spark.learning.utils.Utils
+import com.manish.spark.learning.utils.{CSV, Utils}
 import org.apache.log4j.{Level, Logger}
 import org.apache.spark.sql.functions.col
 import org.apache.spark.sql.types.{IntegerType, StringType, StructField, StructType}
@@ -21,7 +21,7 @@ object SparkSqlExample {
         StructField("destination", StringType)
       )
     )
-    val departureDelaysDF = Utils.dataFrameFromSchemaAndFile(spark, schema, csvFile, "csv")
+    val departureDelaysDF = Utils.dataFrameFromSchemaAndFile(spark, schema, csvFile, CSV)
 
     // create a temporary view, its lifetime is tied to spark session used to create it
     departureDelaysDF.createOrReplaceTempView("us_delay_flights_tbl")

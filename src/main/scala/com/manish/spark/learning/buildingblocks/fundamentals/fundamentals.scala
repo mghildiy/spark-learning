@@ -10,7 +10,7 @@ object fundamentals  extends App with Serializable {
 
   logger.info("Creating spark session")
   // access SparkSession object, only one SparkSession per main method
-  val spark = Utils.createSparkSessionFromConf("src/main/resources/fundamentals-spark.conf")
+  val spark = Utils.createSparkSessionFromConf("src/main/resources/conf/fundamentals-spark.conf")
 
   val ds = spark.range(1000)
   //ds.show(5)

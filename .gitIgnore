@@ -5,3 +5,5 @@ spark-warehouse
 target
 log4j.properties
 project
+data
+conf

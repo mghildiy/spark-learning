@@ -1,6 +1,6 @@
 package com.manish.spark.learning.buildingblocks
 
-import com.manish.spark.learning.utils.Utils
+import com.manish.spark.learning.utils.{CSV, Utils}
 import org.apache.log4j.{Level, Logger}
 import org.apache.spark.sql.functions.{col, desc, to_date, to_timestamp}
 
@@ -8,7 +8,7 @@ object OperationsOnDataFrame extends SFSchema {
 
   val spark = Utils.createSparkSession("DataFrame exploration")
   val sfFireSchemaBasedDF = Utils.dataFrameFromSchemaAndFile(spark
-    , sfFireIncidentsSchema, "D:\\work\\learning\\dataengg\\spark\\spark-learning\\src\\main\\resources\\sf_fire_Incidents.csv", "csv")
+    , sfFireIncidentsSchema, "D:\\work\\learning\\dataengg\\spark\\spark-learning\\src\\main\\resources\\sf_fire_Incidents.csv", CSV)
     sfFireSchemaBasedDF.printSchema()
 
   def main(args: Array[String]) = {

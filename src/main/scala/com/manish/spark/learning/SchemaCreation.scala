@@ -1,11 +1,10 @@
 package com.manish.spark.learning
 
-import com.manish.spark.learning.utils.Utils
+import com.manish.spark.learning.utils.{JSON, Utils}
 import org.apache.log4j.{Level, Logger}
 import org.apache.spark.sql.SparkSession
-import org.apache.spark.sql.catalyst.dsl.expressions.{DslExpression, StringToAttributeConversionHelper}
 import org.apache.spark.sql.functions.{col, concat, expr}
-import org.apache.spark.sql.types.{ArrayType, IntegerType, StringType, StructField, StructType}
+import org.apache.spark.sql.types._
 
 object SchemaCreation {
 
@@ -41,7 +40,7 @@ object SchemaCreation {
       StructField("Hits", IntegerType, false),
       StructField("Campaigns", ArrayType(StringType), false)))
 
-    val blogsDF = Utils.dataFrameFromSchemaAndFile(sparkSession, schema, "blogs.json", "json")
+    val blogsDF = Utils.dataFrameFromSchemaAndFile(sparkSession, schema, "blogs.json", JSON)
     blogsDF.show(false)
     println(blogsDF.printSchema)
     println(blogsDF.schema)

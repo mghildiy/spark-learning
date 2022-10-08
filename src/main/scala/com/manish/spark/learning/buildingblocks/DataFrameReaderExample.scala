@@ -1,6 +1,6 @@
 package com.manish.spark.learning.buildingblocks
 
-import com.manish.spark.learning.utils.Utils
+import com.manish.spark.learning.utils.{CSV, Utils}
 import org.apache.log4j.{Level, Logger}
 
 object DataFrameReaderExample extends SFSchema {
@@ -15,7 +15,7 @@ object DataFrameReaderExample extends SFSchema {
     //val sfFireSamplingBasedDF = Utils.dataFrameFromSampleAndFile(spark, 0.001, true, "sf_fire_Incidents.csv", "csv")
 
     // creating dataframe using custom schema
-    val sfFireSchemaBasedDF = Utils.dataFrameFromSchemaAndFile(spark, sfFireIncidentsSchema, "sf_fire_Incidents.csv", "csv")
+    val sfFireSchemaBasedDF = Utils.dataFrameFromSchemaAndFile(spark, sfFireIncidentsSchema, "sf_fire_Incidents.csv", CSV)
     println(sfFireSchemaBasedDF.schema)
     sfFireSchemaBasedDF.printSchema
 

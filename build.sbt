@@ -14,11 +14,14 @@ version := "1.0"
 // Version of Scala
 scalaVersion := "2.12.14"
 val sparkVersion = "3.3.0"
+//scalaVersion := "2.12.10"
+//val sparkVersion = "3.0.0-preview2"
 // Spark library dependencies
 useCoursier := false
 val sparkDependencies = Seq(
   "org.apache.spark" %% "spark-core" % sparkVersion,
-  "org.apache.spark" %% "spark-sql" % sparkVersion
+  "org.apache.spark" %% "spark-sql" % sparkVersion,
+  "org.apache.spark" %% "spark-avro" % sparkVersion
 )
 
 val testDependencies = Seq(
