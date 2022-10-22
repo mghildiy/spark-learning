@@ -41,13 +41,25 @@ object Writing extends App {
     .option("path", sink)
     .save()*/
 
-  dataFrame.write
+  /*dataFrame.write
     .format("json")
     .mode(SaveMode.Overwrite)
     .option("path", "src/main/resources/data/sink/json")
     .partitionBy("OP_CARRIER", "ORIGIN")
     .option("maxRecordsPerFile", 10000)
-    .save()
+    .save()*/
+
+  spark.sql("CREATE DATABASE IF NOT EXISTS flight_time_db")
+  spark.catalog.setCurrentDatabase("flight_time_db")
+
+  dataFrame.write
+    .format("csv")
+    .mode(SaveMode.Overwrite)
+    .bucketBy(5, "OP_CARRIER", "ORIGIN")
+    .sortBy("OP_CARRIER", "ORIGIN")
+    .saveAsTable("flight_time_tbl")
+
+  spark.catalog.listTables("flight_time_db").show()
 
   logger.info("Writing to the sink finished")
   spark.close()

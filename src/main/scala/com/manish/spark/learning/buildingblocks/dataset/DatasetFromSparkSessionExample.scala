@@ -22,6 +22,7 @@ object DatasetFromSparkSessionExample extends App {
 
   val dsUsage = spark.createDataset(data)
   dsUsage.show()
+  println("Schema is: "+dsUsage.schema)
 
   dsUsage
     .filter(d => d.usage> 900)
