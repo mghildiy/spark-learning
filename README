@@ -8,3 +8,8 @@ Intellij IDE VM options for a spark application logs:
 ## Program arguments
 data:src/main/resources/data/source/flight-time.parquet
 conf:src/main/resources/conf/writing-spark.conf
+
+## API links
+https://spark.apache.org/docs/latest/api/scala/index.html#org.apache.spark.sql.Dataset
+https://spark.apache.org/docs/latest/api/scala/index.html#org.apache.spark.sql.Column
+https://spark.apache.org/docs/latest/api/scala/index.html#org.apache.spark.sql.functions$
